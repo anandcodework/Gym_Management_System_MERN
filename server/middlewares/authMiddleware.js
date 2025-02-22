@@ -1,26 +1,26 @@
+// authMiddleware.js
+
 import JWT from "jsonwebtoken";
 import Subscription from "../models/Subscription.js";
 
-
+// Middleware to check if user is signed in
 export const requireSignIn = async (req, res, next) => {
     try {
-        console.log("Authorization Header:", req.headers.authorization); // Log header
+        console.log("Authorization Header:", req.headers.authorization);
         const decode = JWT.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET);
-        console.log("Decoded Token:", decode);  // Log decoded token content
-        req.user = decode; // Set the decoded token in req.user
+        console.log("Decoded Token:", decode);
+        req.user = decode;  // Set the decoded token in req.user
         next();
     } catch (err) {
-        console.log("Error:", err); // Log error if token is invalid or expired
+        console.log("Error:", err);
         return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 };
 
-
-
-
+// Middleware to check if user is an admin
 export const isAdmin = async (req, res, next) => {
     try {
-        console.log("User Role:", req.user.role);  // Log role
+        console.log("User Role:", req.user.role);
         if (req.user.role !== 1) {
             return res.status(401).json({
                 success: false,
@@ -29,7 +29,7 @@ export const isAdmin = async (req, res, next) => {
         }
         next();
     } catch (error) {
-        console.log("Admin Middleware Error:", error);  // Log any error
+        console.log("Admin Middleware Error:", error);
         res.status(401).json({
             success: false,
             error,
@@ -38,9 +38,7 @@ export const isAdmin = async (req, res, next) => {
     }
 };
 
-
-
-
+// Middleware to check if user is subscribed
 export const isSubscribed = async (req, res, next) => {
     try {
         const userId = req.user._id;
@@ -59,3 +57,5 @@ export const isSubscribed = async (req, res, next) => {
         });
     }
 };
+
+export default { requireSignIn, isAdmin, isSubscribed };
