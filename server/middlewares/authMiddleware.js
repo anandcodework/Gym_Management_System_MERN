@@ -2,7 +2,7 @@ import JWT from "jsonwebtoken";
 import Subscription from "../models/Subscription.js";
 
 
-const requireSignIn = async (req, res, next) => {
+export const requireSignIn = async (req, res, next) => {
     try {
         console.log("Authorization Header:", req.headers.authorization); // Log header
         const decode = JWT.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET);
@@ -18,7 +18,7 @@ const requireSignIn = async (req, res, next) => {
 
 
 
-const isAdmin = async (req, res, next) => {
+export const isAdmin = async (req, res, next) => {
     try {
         console.log("User Role:", req.user.role);  // Log role
         if (req.user.role !== 1) {
@@ -41,7 +41,7 @@ const isAdmin = async (req, res, next) => {
 
 
 
-const isSubscribed = async (req, res, next) => {
+export const isSubscribed = async (req, res, next) => {
     try {
         const userId = req.user._id;
         const subscription = await Subscription.findOne({ user: userId });
@@ -59,7 +59,3 @@ const isSubscribed = async (req, res, next) => {
         });
     }
 };
-
-
-export { requireSignIn, isAdmin, isSubscribed };
-
