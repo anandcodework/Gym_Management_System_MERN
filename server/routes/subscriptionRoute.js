@@ -1,5 +1,5 @@
 import express from "express";
-import {isAdmin, requireSignIn} from "../middlewares/authMiddleware.js";
+import {isAdmin, requireSignIn} from "../Middlewares/authMiddleware.js";
 import {createSubscriptionPlanController, updateSubscriptionController, deleteSubscriptionController, getAllSubscriptionsController, getSubscriptionController, subscriptionCountController} from "../controlllers/subscriptionController.js"
 const router = express.Router();
 

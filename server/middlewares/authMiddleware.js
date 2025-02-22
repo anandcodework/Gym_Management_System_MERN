@@ -1,6 +1,4 @@
 import JWT from "jsonwebtoken";
-// import User from "../models/User.js";
-import {User} from "../models/User.js";
 import Subscription from "../models/Subscription.js";
 
 
