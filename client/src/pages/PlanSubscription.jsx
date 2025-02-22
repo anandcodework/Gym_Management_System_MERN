@@ -43,6 +43,17 @@ const PlanSelection = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     getPlan();
+
+    // Dynamically load Razorpay script
+    const script = document.createElement('script');
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Cleanup Razorpay script when component unmounts
+    return () => {
+      document.body.removeChild(script);
+    };
   }, [planid]);
 
   const calculatePlanAmount = (planType) => {
@@ -125,6 +136,12 @@ const PlanSelection = () => {
       const paymentData = await axios.post(`${BASE_URL}/api/v1/payment/razorpay`, {
         amount: planAmount,
       });
+
+      if (!window.Razorpay) {
+        console.error("Razorpay script not loaded");
+        toast.error("Razorpay script not loaded.");
+        return;
+      }
 
       const options = {
         key: paymentData.data.key,

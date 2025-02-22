@@ -37,11 +37,6 @@ router.post("/forgot-password", forgotPasswordController);
 // update profile
 router.put("/user-profile", requireSignIn, updateProfileController);
 
-app.post("/api/v1/payment/razorpay", (req, res) => {
-    // Handle Razorpay order creation logic
-  });
-  
-
 
 // count profile
 router.get("/total-user", userCountController);

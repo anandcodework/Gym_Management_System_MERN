@@ -1,29 +1,40 @@
+import express from 'express';
 import Razorpay from 'razorpay';
+import crypto from 'crypto';
+import dotenv from 'dotenv';
 
-// Initialize Razorpay instance with keys from environment variables
-const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,  // Use the RAZORPAY_KEY_ID from environment
-  key_secret: process.env.RAZORPAY_KEY_SECRET,  // Use the RAZORPAY_KEY_SECRET from environment
+dotenv.config();
+
+const router = express.Router();
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// Create an order for payment
-export const createOrder = async (amount) => {
+// Create Razorpay order route
+router.post('/razorpay', async (req, res) => {
+  const { amount } = req.body;  // Expect the amount from frontend
+
+  const orderOptions = {
+    amount: amount * 100, // Convert amount to paise (Razorpay accepts amount in paise)
+    currency: 'INR',
+    receipt: crypto.randomBytes(10).toString('hex'),
+    payment_capture: 1, // Auto capture payment
+  };
+
   try {
-    const options = {
-      amount: amount * 100, // Convert to paise (Razorpay works in paise, so we multiply by 100)
-      currency: 'INR',  // Currency for the payment
-      receipt: `receipt_${Math.random() * 1000}`,  // Unique receipt number
-      payment_capture: 1, // Automatically capture payment
-    };
-
-    // Create the order in Razorpay
-    const order = await razorpayInstance.orders.create(options);
-    return order;
+    const order = await razorpay.orders.create(orderOptions);
+    res.status(200).json({
+      success: true,
+      key: process.env.RAZORPAY_KEY_ID,
+      amount: order.amount,
+      currency: order.currency,
+      order_id: order.id,
+    });
   } catch (error) {
-    throw new Error('Error creating Razorpay order');
+    console.error('Error creating Razorpay order', error);
+    res.status(500).json({ success: false, message: 'Internal Server Error' });
   }
-};
+});
 
-export default {
-  createOrder,
-};
+export default router;

@@ -34,8 +34,8 @@ app.use("/api/v1/plan", planRoute);
 app.use("/api/v1/subscription", subscriptionRoute);
 app.use("/api/v1/contact", ContactRoute);
 app.use("/api/v1/feedback", feedBackRoute);
-app.use('/api/payment', paymentRoutes);
-
+app.use('/api/v1/payment', paymentRoutes);
+  
 
 const startServer = async () => {
     try {

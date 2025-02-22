@@ -1,4 +1,4 @@
-import razorpayHelper from '../helpers/razorpayHelper'
+import razorpayHelper from '../helpers/razorpayHelper.js'
 
 const createPaymentOrder = async (req, res) => {
   try {
