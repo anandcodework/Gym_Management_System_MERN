@@ -1,7 +1,6 @@
 import React,{useEffect} from 'react';
 import { Hero, Plans, Trainers, Reviews, FAQ } from '../components';
 import Contact from "./Contact";
-import About from './About';
 const Home = () => {
   
   useEffect(() => {
