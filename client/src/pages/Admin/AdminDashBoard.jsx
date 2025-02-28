@@ -134,6 +134,10 @@ const AdminDashBoard = () => {
               <h2 className='text-white font-bold text-3xl'>Feedbacks: {feedbackCount !== null ? feedbackCount : "Loading..."}</h2>
             </Link>
           )}
+          
+          <Link className='p-5 border border-white hover:bg-blue-600 transition-all' to={`/dashboard/admin/attendance`} data-aos="fade-up" data-aos-delay="300">
+            <h2 className='text-white font-bold text-3xl'>Attendance </h2>
+          </Link>
         </div>
       </div>
     </section>

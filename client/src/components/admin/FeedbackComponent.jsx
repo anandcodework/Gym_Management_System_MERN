@@ -25,7 +25,7 @@ const FeedbackComponent = ({ userImg, rating, comment, name, date, i, feedbackId
 
   return (
     <div 
-      className='border-2 rounded-lg hover:bg-gray-50 p-4 transition-all ease-in-out duration-300 group flex flex-col gap-4 shadow-md hover:shadow-xl'
+      className='border-2 rounded-lg hover:bg-gray-50 text-white p-4 transition-all ease-in-out duration-300 group flex flex-col gap-4 shadow-md hover:shadow-xl'
       key={i}
     >
       <img 
@@ -36,16 +36,16 @@ const FeedbackComponent = ({ userImg, rating, comment, name, date, i, feedbackId
       <h3 className='text-yellow-500 group-hover:text-gray-800 capitalize font-bold text-xl group-hover:underline text-center'>
         {name}
       </h3>
-      <p className='text-gray-600 group-hover:text-gray-800 text-md font-medium'>
+      <p className='text-white group-hover:text-gray-800 text-md font-medium'>
         <span className='font-semibold'>Comment:</span> {comment}
       </p>
       <p className='text-red-500 text-md font-medium'>
         <span className='font-semibold'>Rating:</span> <span className='text-white group-hover:text-black'>{rating}</span>
       </p>
-      <p className='text-gray-600 group-hover:text-gray-800 text-md font-medium'>
+      <p className='text-white group-hover:text-gray-800 text-md font-medium'>
         <span className='font-semibold'>Date:</span> {readableDate}
       </p>
-      <p className='text-gray-600 group-hover:text-gray-800 text-md font-medium'>
+      <p className='text-white group-hover:text-gray-800 text-md font-medium'>
         <span className='font-semibold'>Feedback ID:</span> {feedbackId}
       </p>
       <button 

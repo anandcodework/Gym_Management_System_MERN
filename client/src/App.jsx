@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Header, Footer, ScrollButton, PrivateRoute, AdminRoute, Modal } from "./components";
+import { Header, Footer, ScrollButton, PrivateRoute, AdminRoute, Modal,  } from "./components";
+import Attendance from './pages/User/Attendance'
 import { Register, Login, ForgotPassword, Home, PlanSubscription, Error, Exercise, ExerciseDetail, Profile, UserDashBoard, PlanDetail, AdminDashBoard, CreatePlan, UpdatePlan, Plans, SubscriberList, UserList, FavouriteExercises, PlanDetails, PlanFullDetail, ContactUs, TrainerDetails, Feedback, Feedbacks, FeedbackList} from "./pages";
 // import PlanFullDetail from './pages/User/planFullDetail';
 import { Toaster } from 'react-hot-toast';
@@ -38,6 +39,7 @@ const App = () => {
           <Route path='user/plan-detail-full/:planid' element={<PlanFullDetail/>} />
           <Route path='user/favourite-exercises' element={<FavouriteExercises/>} />
           <Route path='user/feedbacks' element={<Feedbacks/>} />
+          <Route path='user/attendance' element={<Attendance/>} />
 
         </Route>
 
@@ -54,6 +56,7 @@ const App = () => {
           <Route path='admin/contact-us' element={<ContactUs />} />
           <Route path='admin/subscriber-list' element={<SubscriberList />} />
           <Route path='admin/feedbacks' element={<FeedbackList />} />
+          <Route path='admin/attendance' element={<Attendance/>} />
          
         </Route>
 

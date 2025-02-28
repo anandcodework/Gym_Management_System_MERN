@@ -5,10 +5,13 @@ import {toast} from "react-hot-toast";
 import {userImg} from "../../images";
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../utils/fetchData';
+import { useAuth } from '../../context/auth';
+
 const FeedbackList = () => {
   const navigate = useNavigate();
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { auth, setAuth } = useAuth();
   const [feedbackId, setFeedbackId] = useState(null); // Initialize subId as null
   const getAllFeedbacks = async () => {
     try {

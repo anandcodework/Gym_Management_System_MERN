@@ -4,9 +4,12 @@ import { Heading, ContactComponent, Loader } from '../../components';
 import {userImg} from "../../images";
 import {toast} from "react-hot-toast";
 import {BASE_URL} from "../../utils/fetchData";
+import { useAuth } from '../../context/auth';
+
 const ContactUs = () => {
   const [contact, setContact] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { auth, setAuth } = useAuth();
 
   const getAllContact= async () => {
     try {

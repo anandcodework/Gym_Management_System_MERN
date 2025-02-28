@@ -8,7 +8,7 @@ console.log(exercises);
 if(exercises.length === 0){
 
 return (
-  <h1 className='text-4xl flex justify-center items-center w-full h-screen text-center'>No Exercises Found.....</h1>
+  <h1 className='text-4xl flex justify-center text-white items-center w-full h-screen text-center'>No Exercises Found.....</h1>
 )
 }
 

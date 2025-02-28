@@ -67,9 +67,6 @@ const PlanDetail = () => {
           <Subscription userImg={userImg} userName={u.userName} planName={u.plan.planName} planAmount={u.planAmount} planType={u.planType} i={i} key={i} createdAt={u.createdAt} planid={u.plan._id}/>
         ))}
       </div>
-
-
-
     </div>
   </section>
   )

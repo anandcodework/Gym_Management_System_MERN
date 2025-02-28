@@ -23,6 +23,7 @@ import subscriptionRoute from "./routes/subscriptionRoute.js";
 import ContactRoute from "./routes/contactRoute.js";
 import feedBackRoute from "./routes/feedBackRoute.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
+import attendanceRoutes from "./routes/attendanceRoutes.js";
 
 
 app.get("/", (req, res) => {
@@ -35,6 +36,7 @@ app.use("/api/v1/subscription", subscriptionRoute);
 app.use("/api/v1/contact", ContactRoute);
 app.use("/api/v1/feedback", feedBackRoute);
 app.use('/api/v1/payment', paymentRoutes);
+app.use('/api/v1/attendance', attendanceRoutes);
   
 
 const startServer = async () => {
@@ -50,11 +52,3 @@ const startServer = async () => {
     }
 }
 startServer();
-
-
-
-
-
-
-
-

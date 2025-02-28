@@ -244,6 +244,21 @@ const getAllUsersController = async (req, res) => {
     }
 }
 
+// const getUserController = async (req, res) => {
+//     try {
+//         const users = await User.findOne({user: req.user.name});
+//         res.status(200).json({
+//             success: true,
+//             users
+//         })
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({
+//             success: false, error, message: "Error in getting all users",
+//         })
+//     }
+// }
+
 
 
 // Route to fetch user's subscription details
@@ -254,13 +269,14 @@ const getSubscriptionByUser = async (req, res) => {
         if (!subscription) {
             return res.status(404).json({ message: 'Subscription not found' });
         }
-        res.status(200).json({success:true, subscription});
+        res.status(200).json({ success: true, subscription });
     } catch (error) {
         console.error('Error fetching subscription:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
 
+// This is the second, redundant code block you need to remove:
 const getAllSubscriptionByUser = async (req, res) => {
     try {
         // Fetch subscription details including connected plan for the authenticated user
@@ -268,12 +284,14 @@ const getAllSubscriptionByUser = async (req, res) => {
         if (!subscription) {
             return res.status(404).json({ message: 'Subscription not found' });
         }
-        res.status(200).json({success:true, subscription});
+        res.status(200).json({ success: true, subscription });
     } catch (error) {
         console.error('Error fetching All subscription:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
+
+
 
 
 const getAllFeedbacksByUser = async (req, res) => {
