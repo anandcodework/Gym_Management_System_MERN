@@ -3,12 +3,22 @@ import axios from 'axios';
 import { BASE_URL } from '../../utils/fetchData';
 import { Loader } from '../../components'; // Assuming you have a loader component
 import toast from 'react-hot-toast';
+import { useAuth } from '../../context/auth';
 
 const Attendance = () => {
-  const [name, setName] = useState('');
+  const { auth } = useAuth();
   const [status, setStatus] = useState('Present');
+  const [name, setName] = useState("");
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  
+
+  // Load initial user data when the component mounts
+  useEffect(() => {
+    if (auth?.user) {
+      setName(auth.user.name);  // Set name from auth context
+    }
+  }, [auth]);
 
   // Handle form submission for attendance
   const handleSubmit = async (e) => {
@@ -18,15 +28,15 @@ const Attendance = () => {
       setLoading(true);
       await axios.post(`${BASE_URL}/api/v1/attendance/attendance`, { name, status });
       toast.success('Attendance submitted!');
-      fetchHistory(); // Refresh the attendance history after submission
+      fetchHistory(); 
     } catch (error) {
       toast.error('Error submitting attendance');
-      console.error(error); // Log the error to see more details
+      console.error(error);
     }
     setLoading(false);
   };
 
-  // Fetch attendance history on component mount
+  
   const fetchHistory = async () => {
     try {
       setLoading(true);
@@ -40,7 +50,7 @@ const Attendance = () => {
   };
 
   useEffect(() => {
-    fetchHistory(); // Fetch history when the component mounts
+    fetchHistory(); 
   }, []);
 
   if (loading) {
@@ -56,14 +66,8 @@ const Attendance = () => {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8 w-1/2 justify-items-center">
           <h3 className="text-2xl font-semibold text-blue-600 mb-4 text-center">Submit Attendance</h3>
           <form onSubmit={handleSubmit} className="space-y-6">
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+
+          <p className='fontsemi-bold text-2xl '>Name: {name}</p>
             <select
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={status}
