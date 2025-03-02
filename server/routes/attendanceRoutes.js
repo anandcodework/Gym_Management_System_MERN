@@ -1,5 +1,5 @@
 import express from 'express';
-import { submitAttendance, getAttendanceHistory } from '../controlllers/attendanceController.js';
+import { submitAttendance, getAllHistory, getUserHistory } from '../controlllers/attendanceController.js';
 
 const router = express.Router();
 
@@ -7,6 +7,9 @@ const router = express.Router();
 router.post('/attendance', submitAttendance);
 
 // GET - Get attendance history
-router.get('/attendanceHistory', getAttendanceHistory);
+router.get('/user-history', getUserHistory);
 
-export default router;  // Use ES6 export
+// GET - Get all attendance history (admin or other use cases)
+router.get('/all-history', getAllHistory);
+
+export default router;

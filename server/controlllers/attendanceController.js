@@ -35,12 +35,31 @@ export const submitAttendance = async (req, res) => {
 };
 
 // Get Attendance History
-export const getAttendanceHistory = async (req, res) => {
+export const getAllHistory = async (req, res) => {
   try {
     const history = await Attendance.find().sort({ date: -1 }); // Get sorted history
     res.status(200).json(history);
   } catch (error) {
     console.error('Error fetching attendance history:', error);
+    res.status(500).json({ message: 'Error fetching attendance history', error: error.message });
+  }
+};
+
+// Get User's Attendance History
+export const getUserHistory = async (req, res) => {
+  const { name } = req.query;  // Extract the name from query parameters
+
+  try {
+    // Fetch the attendance records for the specific user by name
+    const userAttendanceHistory = await Attendance.find({ name }).sort({ date: -1 });
+
+    if (userAttendanceHistory.length === 0) {
+      return res.status(404).json({ message: 'No attendance records found for this user.' });
+    }
+
+    res.status(200).json(userAttendanceHistory);
+  } catch (error) {
+    console.error('Error fetching user attendance history:', error);
     res.status(500).json({ message: 'Error fetching attendance history', error: error.message });
   }
 };

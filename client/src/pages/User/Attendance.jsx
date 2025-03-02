@@ -54,18 +54,33 @@ const Attendance = () => {
     setLoading(false);
   };
 
-  // Fetch attendance history when the component mounts
   const fetchHistory = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${BASE_URL}/api/v1/attendance/attendanceHistory`);
+  
+      // Use `auth.user.name` or `auth.user._id` depending on what you have in your auth context
+      const userName = auth?.user?.name;
+  
+      if (!userName) {
+        toast.error('User not authenticated.');
+        setLoading(false);
+        return;
+      }
+  
+      // Send the username in the request to filter the history
+      const response = await axios.get(
+        `${BASE_URL}/api/v1/attendance/user-history?name=${userName}`
+      );
+  
       setHistory(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching attendance history:', error);
+      toast.error('Error fetching attendance history');
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchHistory(); // Fetch history when the component mounts
