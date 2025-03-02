@@ -4,6 +4,8 @@ import { BASE_URL } from '../../utils/fetchData';
 import { Loader } from '../../components'; // Assuming you have a loader component
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
+import Calendar from 'react-calendar'; // Import react-calendar
+import 'react-calendar/dist/Calendar.css'; // Import default calendar styles
 
 const Attendance = () => {
   const { auth } = useAuth();
@@ -22,7 +24,6 @@ const Attendance = () => {
   // Handle form submission for attendance
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Submitting:', { name, status }); // Log the data being submitted
     try {
       setLoading(true);
 
@@ -74,6 +75,24 @@ const Attendance = () => {
     return <Loader />; // Show loader while data is being fetched or submitted
   }
 
+  // Map attendance history to a format the calendar can use
+  const markDates = () => {
+    return history.map((record) => {
+      return {
+        date: new Date(record.date),
+        status: record.status,
+      };
+    });
+  };
+
+  // Format dates into a dictionary of statuses
+  const getDayStatus = (date) => {
+    const record = history.find(
+      (item) => new Date(item.date).toLocaleDateString() === date.toLocaleDateString()
+    );
+    return record ? record.status : null;
+  };
+
   return (
     <section className='pt-10 bg-gray-900 min-h-screen'>
       <div className="container mx-auto px-6 py-20 justify-items-center">
@@ -99,6 +118,26 @@ const Attendance = () => {
               Submit Attendance
             </button>
           </form>
+        </div>
+
+        {/* Calendar Section */}
+        <div className="bg-white p-6 rounded-lg shadow-md w-1/2 mb-8">
+          <h3 className="text-2xl font-semibold text-blue-600 mb-4 text-center">Attendance Calendar</h3>
+          <div className="text-center flex justify-center">
+            <Calendar
+              tileClassName={({ date }) => {
+                const status = getDayStatus(date);
+                if (status === 'Present') {
+                  return 'bg-green-500 text-white'; // Green for present
+                }
+                if (status === 'Absent') {
+                  return 'bg-red-500 text-white'; // Red for absent
+                }
+                return ''; // Default tile class if no attendance data
+              }}
+              onClickDay={(value) => console.log(value)} // Optional: Handle day click
+            />
+          </div>
         </div>
 
         {/* Attendance History Section */}
