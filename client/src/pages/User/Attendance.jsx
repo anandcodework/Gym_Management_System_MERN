@@ -11,7 +11,6 @@ const Attendance = () => {
   const [name, setName] = useState("");
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
-  
 
   // Load initial user data when the component mounts
   useEffect(() => {
@@ -26,17 +25,35 @@ const Attendance = () => {
     console.log('Submitting:', { name, status }); // Log the data being submitted
     try {
       setLoading(true);
-      await axios.post(`${BASE_URL}/api/v1/attendance/attendance`, { name, status });
+
+      // Send the data to the backend with JSON format
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/attendance/attendance`, 
+        { 
+          name: name, // Send the user name
+          status: status // Send the attendance status (Present/Absent)
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json', // Specify content type as JSON
+          }
+        }
+      );
+
       toast.success('Attendance submitted!');
-      fetchHistory(); 
+      fetchHistory(); // Refresh the attendance history after successful submission
     } catch (error) {
-      toast.error('Error submitting attendance');
+      if (error.response) {
+        toast.error(error.response?.data?.message || 'Error submitting attendance');
+      } else {
+        toast.error('Error submitting attendance');
+      }
       console.error(error);
     }
     setLoading(false);
   };
 
-  
+  // Fetch attendance history when the component mounts
   const fetchHistory = async () => {
     try {
       setLoading(true);
@@ -50,15 +67,15 @@ const Attendance = () => {
   };
 
   useEffect(() => {
-    fetchHistory(); 
+    fetchHistory(); // Fetch history when the component mounts
   }, []);
 
   if (loading) {
-    return <Loader />;
+    return <Loader />; // Show loader while data is being fetched or submitted
   }
 
   return (
-    <section className='pt-10 bg-gray-900 min-h-screen '>
+    <section className='pt-10 bg-gray-900 min-h-screen'>
       <div className="container mx-auto px-6 py-20 justify-items-center">
         <h2 className="text-3xl text-center text-white font-semibold mb-8">Attendance Management</h2>
 
@@ -66,8 +83,7 @@ const Attendance = () => {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8 w-1/2 justify-items-center">
           <h3 className="text-2xl font-semibold text-blue-600 mb-4 text-center">Submit Attendance</h3>
           <form onSubmit={handleSubmit} className="space-y-6">
-
-          <p className='fontsemi-bold text-2xl '>Name: {name}</p>
+            <p className='fontsemi-bold text-2xl '>Name: {name}</p>
             <select
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={status}
