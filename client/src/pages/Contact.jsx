@@ -82,7 +82,7 @@ const Contact = () => {
     <section className='pt-10 contact'>
       <Heading name="Contact Us" />
 
-      <div className="container py-10">
+      <div className=" py-10 ">
         <form className='flex flex-col gap-8 justify-center items-center' onSubmit={createQuery}>
 
           <div data-aos="fade-up" className='w-full max-w-[750px] '> {/* AOS fade-up animation for name input */}
