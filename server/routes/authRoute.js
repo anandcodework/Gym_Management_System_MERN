@@ -6,7 +6,7 @@ import {registerController, loginController, forgotPasswordController, testContr
 import JWT from "jsonwebtoken";
 
 // Middleware to check if user is signed in
-export const requireSignIn = async (req, res, next) => {
+const requireSignIn = async (req, res, next) => {
     try {
         console.log("Authorization Header:", req.headers.authorization);
         const decode = JWT.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET);
@@ -20,7 +20,7 @@ export const requireSignIn = async (req, res, next) => {
 };
 
 // Middleware to check if user is an admin
-export const isAdmin = async (req, res, next) => {
+const isAdmin = async (req, res, next) => {
     try {
         console.log("User Role:", req.user.role);
         if (req.user.role !== 1) {
