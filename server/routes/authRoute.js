@@ -1,7 +1,47 @@
 import express from "express";
-import {isAdmin} from "../Middlewares/authMiddleware.js";
-import {requireSignIn} from "../Middlewares/authMiddleware.js";
 import {registerController, loginController, forgotPasswordController, testController, updateProfileController, userCountController, getAllUsersController, getSubscriptionByUser, getAllSubscriptionByUser, getAllFeedbacksByUser } from "../controlllers/authController.js";
+
+// authMiddleware.js
+
+import JWT from "jsonwebtoken";
+
+// Middleware to check if user is signed in
+export const requireSignIn = async (req, res, next) => {
+    try {
+        console.log("Authorization Header:", req.headers.authorization);
+        const decode = JWT.verify(req.headers.authorization.split(' ')[1], process.env.JWT_SECRET);
+        console.log("Decoded Token:", decode);
+        req.user = decode;  // Set the decoded token in req.user
+        next();
+    } catch (err) {
+        console.log("Error:", err);
+        return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+};
+
+// Middleware to check if user is an admin
+export const isAdmin = async (req, res, next) => {
+    try {
+        console.log("User Role:", req.user.role);
+        if (req.user.role !== 1) {
+            return res.status(401).json({
+                success: false,
+                message: "Unauthorized Access"
+            });
+        }
+        next();
+    } catch (error) {
+        console.log("Admin Middleware Error:", error);
+        res.status(401).json({
+            success: false,
+            error,
+            message: "Error in admin middleware"
+        });
+    }
+};
+
+
+
 
 const router = express.Router();
 
