@@ -22,10 +22,10 @@ import error from "./error1.png";
 
 import exercisePng from "./exercise.png";
 
-import review1 from "./review1.jpg";
-import review2 from "./review2.jpg";
-import review3 from "./review3.jpg";
-import review4 from "./review4.jpg";
+import review1 from "./user.jpg";
+import review2 from "./user.jpg";
+import review3 from "./user.jpg";
+import review4 from "./user.jpg";
 
 import userImg from "./user.png";
 

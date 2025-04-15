@@ -69,7 +69,7 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className='border-t border-gray-700 mt-10 pt-6 text-center'>
-          <p className='text-gray-400'>© 2024 Your Company. All rights reserved.</p>
+          <p className='text-gray-400'>© 2025 Anand Maurya. All rights reserved.</p>
         </div>
       </div>
     </footer>
